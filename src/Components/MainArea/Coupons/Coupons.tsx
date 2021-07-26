@@ -1,11 +1,27 @@
+import { Component } from "react";
+import CouponModel from "../../../Models/CouponModel";
 import "./Coupons.css";
 
-function Coupons(): JSX.Element {
-    return (
-        <div className="Coupons">
-			
-        </div>
-    );
+interface CouponsState {
+	coupons: CouponModel[];
+}
+
+class Coupons extends Component<{}, CouponsState> {
+private url = "https://localhost:8080/coupons"
+    public constructor(props: {}) {
+        super(props);
+        this.state = {
+			coupons:[],
+        };
+    }
+
+    public render(): JSX.Element {
+        return (
+            <div className="Coupons">
+				<h1>Coupons</h1>
+            </div>
+        );
+    }
 }
 
 export default Coupons;
