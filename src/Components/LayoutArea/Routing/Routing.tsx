@@ -1,4 +1,5 @@
 import { Redirect, Route, Switch } from "react-router-dom";
+import AdminDashboard from "../../AdminArea/AdminDashboard/AdminDashboard";
 import About from "../../MainArea/About/About";
 import Contact from "../../MainArea/Contact/Contact";
 import Coupons from "../../MainArea/Coupons/Coupons";
@@ -14,6 +15,7 @@ function Routing(): JSX.Element {
                 <Route path="/coupons" component={Coupons} exact />
                 <Route path="/about" component={About} exact />
                 <Route path="/contact-us" component={Contact} exact />
+                <Route path="/admin" component={AdminDashboard} exact />
                 <Redirect from="/" to="/home" exact/>
                 <Route component={Page404}/> {/* Last */}
             </Switch>

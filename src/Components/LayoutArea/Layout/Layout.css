@@ -5,6 +5,11 @@
     display: grid;
     grid-template-rows: 10% 80% 10%;
     grid-template-columns: repeat(6,1fr);/* fr = Fraction*/
+
+    background-image: url('../../../Assets/Images/shopping-shannon-springs-2.jpg') ;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .Layout > header, .Layout > footer{
@@ -12,8 +17,8 @@
 }
 
 .Layout > header{
-    background-color: #053742;
-    color:white
+    background-color: #FFFFFF70;
+    /* color:white */
 }
 
 .Layout > footer{
@@ -21,8 +26,8 @@
 }
 
 .Layout > main, .Layout > aside{
-    background-color: #39A2DB;
-    color: #F0D9E7;
+    /* background-color: #39A2DB; */
+    /* color: #F0D9E7; */
 }
 .Layout > main {
     grid-column: span 5;
@@ -36,5 +41,5 @@
 }
 
 .Layout,.Layout > *{
-    border: 1px solid black;
+    /* border: 1px solid black; */
 }

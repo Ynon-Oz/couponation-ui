@@ -1,3 +1,19 @@
-.SideNav {
-	
+.SideNav >nav>.nav-link {
+	text-decoration: none;
+    display: inline-block;
+    color:black;
+    background-color:grey;
+    opacity: 0.8;
+    border-radius:5px;
+    margin-top: 20px;
+    width:70%;
+    padding:10px;
+    
+}
+.SideNav>nav>.nav-link:hover {
+	/* background-color:red; */
+    opacity: 0.9;
+    width:75%;
+
+
 }

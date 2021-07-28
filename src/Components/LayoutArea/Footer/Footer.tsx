@@ -3,7 +3,7 @@ import "./Footer.css";
 function Footer(): JSX.Element {
     return (
         <div className="Footer">
-			<p>Ynon Oz 2021 &copy; All rights reseved</p>
+			<p><a href="https://ynon-oz.github.io/MyPortfolio2/" target="_blank">Ynon Oz</a> &copy; 2021</p>
         </div>
     );
 }
