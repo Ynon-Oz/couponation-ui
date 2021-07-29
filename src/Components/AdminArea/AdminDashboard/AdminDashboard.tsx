@@ -1,20 +1,27 @@
 import { NavLink } from "react-router-dom";
 import "./AdminDashboard.css";
 import PeopleAltOutlinedIcon from '@material-ui/icons/PeopleAltOutlined';
-
+import BusinessOutlinedIcon from '@material-ui/icons/BusinessOutlined';
+import CreditCardOutlinedIcon from '@material-ui/icons/CreditCardOutlined';
+import PhotoLibraryOutlinedIcon from '@material-ui/icons/PhotoLibraryOutlined';
 function AdminDashboard(): JSX.Element {
     return (
         <div className="AdminDashboard">
             <h1>Administrative Tools</h1>
             <div className="Grid">
-                <NavLink className="nav-link" to="/admin/users">
-                    <PeopleAltOutlinedIcon ></PeopleAltOutlinedIcon><br />
+                <NavLink className="nav-link" id="Cell1" to="/admin/users">
+                    <PeopleAltOutlinedIcon ></PeopleAltOutlinedIcon>
                     Users
                 </NavLink>
-                <NavLink className="nav-link" to="/admin/companies">Companies</NavLink>
-                <NavLink className="nav-link" to="/admin/coupons">Coupons</NavLink>
-                <NavLink className="nav-link" to="/admin/customers">Customers</NavLink>
-                <NavLink className="nav-link" to="/admin/purchases">Purchases</NavLink>
+                <NavLink className="nav-link" id="Cell2" to="/admin/companies">
+                    <BusinessOutlinedIcon></BusinessOutlinedIcon><br />
+                    Companies</NavLink>
+                <NavLink className="nav-link" id="Cell3" to="/admin/coupons">
+                    <PhotoLibraryOutlinedIcon></PhotoLibraryOutlinedIcon>
+                    Coupons</NavLink>
+                <NavLink className="nav-link" id="Cell4" to="/admin/purchases">
+                    <CreditCardOutlinedIcon></CreditCardOutlinedIcon><br />
+                    Purchases</NavLink>
             </div>
         </div>
     );
@@ -22,7 +29,3 @@ function AdminDashboard(): JSX.Element {
 
 export default AdminDashboard;
 
-{/* <span className="material-icons-outlined">
-people
-</span> */}
-// import PeopleAltOutlinedIcon from '@material-ui/icons/PeopleAltOutlined';

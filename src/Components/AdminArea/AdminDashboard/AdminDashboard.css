@@ -1,31 +1,48 @@
-.AdminDashboard >.Grid{
-	/* display: flex;
-    flex-direction: column;
-    justify-content: center; */
+.AdminDashboard{
+    height: 90%;
+    
+}
+.AdminDashboard > .Grid {
+    height: 80%;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    grid-gap: 5px;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  grid-gap: 5px;
 }
 
-.AdminDashboard>.Grid>.nav-link{
-    color:black;
-    background-color:grey;
-    opacity: 0.9;
-    border-radius:5px;
-    margin: auto auto;
-    width:200px;
-    height:150px;
-    text-decoration:none;
+.AdminDashboard > .Grid > .nav-link {
+  color: black;
+  opacity: 0.9;
+  border-radius: 5px;
+  margin: auto;
+  width: 80%;
+  height: 100%;
+  text-decoration: none;
+  font-size: 2em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.AdminDashboard>.Grid>.nav-link:hover{
+.AdminDashboard > .Grid > .nav-link:hover {
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
     opacity: 1;
+}
 
+#Cell1 {
+    background-color: salmon;
+    
 }
-.AdminDashboard>.Grid>.nav-link>PeopleAltOutlinedIcon{
-    font-size:100px;
+#Cell2 {
+    background-color: yellow;
+    
 }
-.material-icons-outlined{
-    font-size: 200px;
+#Cell3 {
+    background-color: lightblue;
+    
+}
+#Cell4 {
+    background-color: lightgreen;
+    
 }
