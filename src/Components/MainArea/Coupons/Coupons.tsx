@@ -1,5 +1,10 @@
+import axios from "axios";
 import { Component } from "react";
 import CouponModel from "../../../Models/CouponModel";
+import { couponsDownloadedAction } from "../../../Redux/CouponsAppState";
+import store from "../../../Redux/Store";
+import globals from "../../../Services/Globals";
+import notify, { SccMsg } from "../../../Services/Notification";
 import "./Coupons.css";
 
 interface CouponsState {
@@ -7,7 +12,7 @@ interface CouponsState {
 }
 
 class Coupons extends Component<{}, CouponsState> {
-private url = "https://localhost:8080/coupons"
+// private url = "https://localhost:8080/coupons"
     public constructor(props: {}) {
         super(props);
         this.state = {
@@ -15,22 +20,23 @@ private url = "https://localhost:8080/coupons"
         };
     }
 
-    // public async componentDidMount() {
+    public async componentDidMount() {
 
-    //     if(this.state.coupons.length==0){
-    //       try {
-    //         const response = await axios.get<CatModel[]>(globals.urls.coupons);
+        if(this.state.coupons.length==0){
+          try {
+            const response = await axios.get<CouponModel[]>(globals.urls.coupons);
       
-    //         store.dispatch(catsDownloadedAction(response.data)) // Global State;
+            store.dispatch(couponsDownloadedAction(response.data)) // Global State;
       
-    //         this.setState({ cats: response.data }); //Local State
-    //         notify.success(SccMsg.DOWNLOADED_CATS)
-    //       } catch (err) {
-    //         notify.error(err);
-    //       }
-    //     }
+            this.setState({ coupons: response.data }); //Local State
+            notify.success(SccMsg.USERS_DOWNLOADED)
+          } catch (err) {
+            notify.error(err);
+            console.log(err);
+          }
+        }
      
-    // }
+    }
 
     public render(): JSX.Element {
         return (

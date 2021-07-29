@@ -1,8 +1,8 @@
 class UserModel {
-    public id?:number;
+    public userId?:number;
     public userName?:string;
     public password?:string;
-    public company?: string;   // Should be an Object
+    public companyId?: string;   // Should be an Object
     public type?: string;    // Should be enum
     // public isActivated? : boolean;  //does need it here?
 }

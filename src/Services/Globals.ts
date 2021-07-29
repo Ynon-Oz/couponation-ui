@@ -7,7 +7,7 @@ class DevelopmentGlobals extends Globals{
         // images: "http://localhost:8080/api/cats/images/",
         coupons: "http://localhost:8080/coupons/",
         companies: "http://localhost:8080/companies/",
-        users: "http://localhost:8080/users/",
+        users: "http://localhost:8080/users",
         customers: "http://localhost:8080/customers/",
         purchases: "http://localhost:8080/purchases/"
     }
