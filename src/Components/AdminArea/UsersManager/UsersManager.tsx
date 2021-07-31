@@ -5,60 +5,31 @@ import AddIcon from '@material-ui/icons/Add';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined';
-
+import { XGrid } from '@material-ui/x-grid';
+import { useDemoData } from '@material-ui/x-grid-data-generator';
 import UserModel from "../../../Models/UserModel";
 import axios from "axios";
 import notify from "../../../Services/Notification";
 import globals from "../../../Services/Globals";
 import * as React from 'react';
 import { DataGrid, GridColDef, GridValueGetterParams } from '@material-ui/data-grid';
+import { NavLink } from "react-router-dom";
+import EmptyView from "../../MainArea/EmptyView/EmptyView";
 
 
 interface UsersManagerState {
     users: UserModel[];
-    columns: GridColDef[];
 }
+// https://material-ui.com/components/tables/#sorting-amp-selecting
 
 class UsersManager extends Component<{}, UsersManagerState> {
 
     public constructor(props: {}) {
         super(props);
         this.state = {
-            users: [],
-            columns:  [
-                { field: 'id', headerName: 'ID', width: 90 },
-                {
-                  field: 'firstName',
-                  headerName: 'First name',
-                  width: 150,
-                  editable: true,
-                },
-                {
-                  field: 'lastName',
-                  headerName: 'Last name',
-                  width: 150,
-                  editable: true,
-                },
-                {
-                  field: 'age',
-                  headerName: 'Age',
-                  type: 'number',
-                  width: 110,
-                  editable: true,
-                },
-                {
-                  field: 'fullName',
-                  headerName: 'Full name',
-                  description: 'This column has a value getter and is not sortable.',
-                  sortable: false,
-                  width: 160,
-                  valueGetter: (params: GridValueGetterParams) =>
-                    `${params.getValue(params.id, 'firstName') || ''} ${
-                      params.getValue(params.id, 'lastName') || ''
-                    }`,
-                },
-              ];
-            
+            users: []
+
+
         };
     }
 
@@ -76,9 +47,10 @@ class UsersManager extends Component<{}, UsersManagerState> {
         return (
             <div className="UsersManager">
                 <div className="">
-                    <Fab size="small" color="primary" aria-label="add" href="/admin">
+                    <NavLink to="/">
+                    <Fab size="small" color="primary" aria-label="add">
                         <ArrowBackIosIcon />
-                    </Fab>
+                    </Fab></NavLink>
                     <TextField className="TextBox" id="standard-basic" label="Search..." variant="outlined" /><br />
                     <input type="text" placeholder="Search..."></input>
 
@@ -87,18 +59,35 @@ class UsersManager extends Component<{}, UsersManagerState> {
                     </Fab>
                 </div>
                 <hr />
-                <div style={{ height: 400, width: '100%' }}>
-                    <DataGrid
-                        rows={this.users.}
-                        columns={columns}
-                        pageSize={5}
-                        checkboxSelection
-                        disableSelectionOnClick
-                    />
-                </div>
-                <div>
-                    {this.state.users.map(u => <span key={u.userId} > {u.userName}</span>)}
-                </div>
+
+                {!this.state.users.length && <EmptyView msg="No Users for you" />}
+                {this.state.users.length && <table>
+                    <thead>
+                        <tr>
+                            <th>User Name</th>
+                            <th>Type</th>
+                            <th>Company</th>
+                            <th>
+                                Actions <NavLink to="/admin/users/add"><button>➕</button></NavLink>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {this.state.users.map((u) => (
+                            <tr key={u.userId}>
+                                <td>{u.userName}</td>
+                                <td>{u.type}</td>
+                                <td>{u.companyId}</td>
+                                <td>
+                                    {/* <button onClick={() => this.deleteCat(u.userId)}>🗑️</button> */}
+                                    <button>✏️</button>
+                                    {/* <NavLink to={'cats/details/' + c.id}><button>🛈</button></NavLink> */}
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>}
+
             </div>
 
         );

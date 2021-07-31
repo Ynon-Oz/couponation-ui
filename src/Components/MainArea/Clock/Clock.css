@@ -1,6 +1,7 @@
 .Clock {
 	position: fixed;
     right: 20px;
+    font-family:digital-7;
 }
 .Clock>p{
 

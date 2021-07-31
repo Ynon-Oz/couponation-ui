@@ -1,5 +1,5 @@
 class CompanyModel {
-    public id?: number;
+    // public id?: number;
     public companyId?: number;
     public companyName?: string;
     public companyAddress?: string;

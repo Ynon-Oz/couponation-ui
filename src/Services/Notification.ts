@@ -21,7 +21,7 @@ export enum ErrMsg{
 }
 class Notify{
 
-    private notification = new Notyf({duration:4000, position:{x:"left",y:"top"}});
+    private notification = new Notyf({duration:2000, position:{x:"left",y:"bottom"}});
     public success(message: string){
         this.notification.success(message);
     }
@@ -52,7 +52,7 @@ class Notify{
         }
 
 
-        return "Miaouuuu, an error occurred, please try again.";
+        return "An error occurred, please try again.";
 
 
     }

@@ -41,3 +41,8 @@ html,body, #root{
 h2{
   color: palevioletred;
 }
+
+@font-face {
+  font-family: 'digital-7';
+  src: local('digital-7'), url(./fonts/digital-7.ttf) ;
+}

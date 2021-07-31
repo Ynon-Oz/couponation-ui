@@ -1,3 +1,18 @@
-.Coupons {
-	
+.CouponsArea {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: stretch;
+    align-items: flex-start;
 }
+.CouponCard{
+   
+    width:280px;
+    margin:5px;
+}
+
+.CardMedia {
+    height: 50%;
+    padding-top: 56.25%; 
+  }
