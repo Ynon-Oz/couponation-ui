@@ -1,9 +1,9 @@
 import { Fab, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from "@material-ui/core";
 import axios from "axios";
 import { Component } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import CompanyModel from "../../../Models/CompanyModel";
-import { companiesDownloadedAction } from "../../../Redux/CompaniesAppState";
+import { companiesDeletedAction, companiesDownloadedAction } from "../../../Redux/CompaniesAppState";
 import store from "../../../Redux/Store";
 import globals from "../../../Services/Globals";
 import notify, { SccMsg } from "../../../Services/Notification";
@@ -15,6 +15,7 @@ import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined'
 
 import "./CompaniesManager.css";
 import { DataGrid, GridColDef, GridValueGetterParams } from "@material-ui/data-grid";
+import { Unsubscribe } from "redux";
 
 interface CompaniesManagerState {
     companies: CompanyModel[];
@@ -22,18 +23,19 @@ interface CompaniesManagerState {
 }
 
 class CompaniesManager extends Component<{}, CompaniesManagerState> {
+    private unsubscribe: Unsubscribe;
 
     public constructor(props: {}) {
         super(props);
         this.state = {
-            companies: [],
+            companies: store.getState().companiesAppState.companies,
             columns: [
-            //     { 
-            //         field: 'id', 
-            //     headerName: 'ID', 
-            //     type: 'number', 
-            //     // width: 90
-            //  },
+                //     { 
+                //         field: 'id', 
+                //     headerName: 'ID', 
+                //     type: 'number', 
+                //     // width: 90
+                //  },
 
                 {
                     field: 'companyId',
@@ -90,7 +92,10 @@ class CompaniesManager extends Component<{}, CompaniesManagerState> {
                 const response = await axios.get<CompanyModel[]>(globals.urls.companies);
 
                 store.dispatch(companiesDownloadedAction(response.data)) // Global State;
-
+                //subscribe
+                store.subscribe(() => {
+                    this.setState({ companies: store.getState().companiesAppState.companies }); // Will let us notify
+                })
                 this.setState({ companies: response.data }); //Local State
                 notify.success(SccMsg.COMPANIES_DOWNLOADED)
             } catch (err) {
@@ -101,12 +106,34 @@ class CompaniesManager extends Component<{}, CompaniesManagerState> {
 
     }
 
+    public async deleteCompany(id: any) {
+
+        const res = window.confirm(
+            "Are you sure you want to delete this cat : " + id + "?"
+        );
+        if (res) {
+            id = +id;
+            try {
+                console.log("Before axios: "+this.state.companies);
+                const response = await axios.delete<any>(globals.urls.companies + id);
+                const companiesFromSrv = this.state.companies.filter((c) => c.companyId !== id);
+                console.log("After filter this.state: "+this.state.companies);
+                this.setState({ companies: companiesFromSrv});
+                console.log(this.state.companies);
+                store.dispatch(companiesDeletedAction(id));
+                notify.success(SccMsg.COMPANY_DELETED);
+            } catch (err) {
+                notify.error(err.message);
+            }
+        }
+    }
+
     public render(): JSX.Element {
         return (
             <div className="CompaniesManager">
 
                 <div className="">
-                    <NavLink to="/" className="BackButton">
+                    <NavLink to="/admin" className="BackButton">
                         <Fab size="small" color="primary" aria-label="add">
                             <ArrowBackIosIcon />
                         </Fab></NavLink>
@@ -133,12 +160,13 @@ class CompaniesManager extends Component<{}, CompaniesManagerState> {
                     <Table className="Table2" aria-label="simple table">
                         <TableHead>
                             <TableRow>
+                                <TableCell>Id</TableCell>
                                 <TableCell>Name</TableCell>
                                 <TableCell align="center">Address</TableCell>
                                 <TableCell align="center">Phone</TableCell>
                                 <TableCell align="center">Fax</TableCell>
                                 <TableCell align="center">Web</TableCell>
-                                <TableCell align="center">Actions <NavLink to="/admin"> <Fab size="small" color="primary" aria-label="add" >
+                                <TableCell align="center">Actions <NavLink to="/admin/companies/add"> <Fab size="small" color="primary" aria-label="add" >
                                     <AddIcon />
                                 </Fab></NavLink></TableCell>
                             </TableRow>
@@ -146,6 +174,7 @@ class CompaniesManager extends Component<{}, CompaniesManagerState> {
                         <TableBody>
                             {this.state.companies.map((c) => (
                                 <TableRow key={c.companyId}>
+                                    <TableCell align="left">{c.companyId}</TableCell>
                                     <TableCell component="th" scope="row">
                                         {c.companyName}
                                     </TableCell>
@@ -157,7 +186,8 @@ class CompaniesManager extends Component<{}, CompaniesManagerState> {
                                         <NavLink to="/"> <Fab size="small" color="default" aria-label="add" >
                                             <EditOutlinedIcon />
                                         </Fab></NavLink>
-                                        <NavLink to="/"> <Fab size="small" color="secondary" aria-label="add" >
+                                        <NavLink to="/admin/companies"> <Fab size="small" color="secondary" aria-label="add"
+                                            onClick={() => this.deleteCompany(c.companyId)}>
                                             <DeleteOutlineOutlinedIcon />
                                         </Fab></NavLink>
                                     </TableCell>
@@ -169,6 +199,10 @@ class CompaniesManager extends Component<{}, CompaniesManagerState> {
             </div>
 
         );
+    }
+
+    public componentWillUnmount(): void{
+        // this.unsubscribe();
     }
 }
 

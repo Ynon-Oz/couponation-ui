@@ -1,4 +1,5 @@
 import { Redirect, Route, Switch } from "react-router-dom";
+import AddCompany from "../../AdminArea/AddCompany/AddCompany";
 import AdminDashboard from "../../AdminArea/AdminDashboard/AdminDashboard";
 import CompaniesManager from "../../AdminArea/CompaniesManager/CompaniesManager";
 import CouponsManager from "../../AdminArea/CouponsManager/CouponsManager";
@@ -21,6 +22,7 @@ function Routing(): JSX.Element {
                 <Route path="/contact-us" component={Contact} exact />
                 <Route path="/admin" component={AdminDashboard} exact />
                 <Route path="/admin/companies" component={CompaniesManager} exact />
+                <Route path="/admin/companies/add" component={AddCompany} exact />
                 <Route path="/admin/coupons" component={CouponsManager} exact />
                 <Route path="/admin/purchases" component={PurchasesManager} exact />
                 <Route path="/admin/users" component={UsersManager} exact />

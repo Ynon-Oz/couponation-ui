@@ -1,94 +1,116 @@
+import { Button, Fab, Icon, TextField } from "@material-ui/core";
 import axios from "axios";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useHistory } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import CompanyModel from "../../../Models/CompanyModel";
 import globals from "../../../Services/Globals";
-
-
+import notify, { SccMsg } from "../../../Services/Notification";
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import AddIcon from '@material-ui/icons/Add';
+import SendIcon from '@material-ui/icons/Send';
+import CloseIcon from '@material-ui/icons/Close';
 import "./AddCompany.css";
+import store from "../../../Redux/Store";
+import { companiesAddedAction } from "../../../Redux/CompaniesAppState";
 
 
 
 
 function AddCompany(): JSX.Element {
 
-    const {register, handleSubmit, formState: { errors }} = useForm<CompanyModel>();
+    const { register, handleSubmit, formState: { errors, isValid } } = useForm<CompanyModel>({
+        mode: "onTouched",
+
+    });
     const history = useHistory();
-    
-    async function send(cat:CompanyModel) {
-        console.log(cat);
-        try{
-            const formData = new FormData();
-            formData.append("name",cat.name);
-            formData.append("weight",cat.weight.toString());
-            formData.append("color",cat.color);
-            formData.append("birthday",cat.birthday.toString());
-            formData.append("image",cat.image.item(0));
-            const response = await axios.post<CompanyModel>(globals.urls.companies,formData);
-            const added = response.data;
-            alert('cat has been added');
-            history.push('/')
+
+    async function send(company: CompanyModel) {
+        console.log(company);
+        try {
+           
+            const response = await axios.post<CompanyModel>(globals.urls.companies, company);
+            store.dispatch(companiesAddedAction(response.data));
+
+            console.log(response.data);
+
+
+            notify.success(SccMsg.COMPANY_ADDED)
+            history.push('/admin/companies')
         }
         catch (err) {
-            console.log(err.message);
+            notify.error(err);
         }
     }
 
 
     return (
         <div className="AddCompany">
-			
+
             <form onSubmit={handleSubmit(send)}>
-                <label>Name</label> <br/>
-                <input type="text" name="name" 
-                {...register("name",{
-                    required: true, 
-                    minLength:2})}/>
-                    {/* pattern: /^[A-Z].*$/ */}
-                <br/>
-                {/* {errors.name && errors.name.type==='required' && <span>missing name</span>}
-                {errors.name && errors.name.type==='minLength' && <span>name is too short</span>} */}
-                {errors.companyName?.type==='required' && <span>missing name</span>}
-                {errors.companyName?.type==='minLength' && <span>name is too short</span>}
-              
-               <br/> <br/>
 
-                <label>Weight</label> <br/>
-                <input type="number" name="weight" step="0.01" {...register("weight",{
+
+                <TextField id="standard-basic" label="Company Name" {...register("companyName", {
                     required: {
-                        value:true,
-                        message:'Missing Weight'},
-                    min:{
-                        value:0,
-                        message:'Weight must be greater than zero'}
-                })}/>
+                        value: true,
+                        message: 'Missing name'
+                    }, minLength: {
+                        value: 0,
+                        message: 'Name should contain at least 2 characters'
+                    },
+                })} />
+
                 <br />
-                <span>{errors.weight?.message}</span>
-                <br/> <br/>
+                <span className="ErrSpan">{errors.companyName?.message}</span>
 
-                <label>Color</label> <br/>
-                <input type="text" name="color" 
-                {...register("color",{required:true} )}/>
-             
-                <br/>
-                {errors.color && <span>missing color</span>}
-                <br/> <br/>
+                <br />
 
-                <label>Birthday</label> <br/>
-                <input type="date" name="birthday" {...register("birthday",{required: true})}/>
-                <br/>
-                {errors.birthday && <span>missing birthday</span>}
-                <br/> <br/>
+                <TextField id="standard-basic" label="Address" {...register("companyAddress", {
+                    required: {
+                        value: true,
+                        message: 'Missing address'
+                    },
+                })} />
+
+                <br />
+                <span className="ErrSpan">{errors.companyAddress?.message}</span>
+                <br />
+
+                <TextField id="standard-basic" label="Phone Number"
+                    {...register("companyPhoneNumber", { required: true })} />
+                <br />
+                {errors.companyPhoneNumber && <span className="ErrSpan">Missing phone number</span>}
+                <br />
+
+                <TextField id="standard-basic" label="Fax Number"
+                    {...register("companyFaxNumber", { required: true })} />
+
+                <br />
+                {errors.companyFaxNumber && <span className="ErrSpan">Missing fax number</span>}
+                <br />
+                <TextField id="standard-basic" label="Web-Site" {...register("companyWebSite", { required: true })} />
+                <br />
+                {errors.companyWebSite && <span className="ErrSpan">Missing WebSite</span>}
+                <br /> <br />
+                {/* <Button
+        variant="contained"
+        color="primary"
+        type ="submit"
+        endIcon={<Icon>send</Icon>}
+      >
+        Send
+      </Button> */}
+                <NavLink to="/admin/companies" className="BackButton">
+                    <Fab size="small" color="primary" aria-label="back">
+                        <CloseIcon />
+                    </Fab>
+                </NavLink> 
                 
-                <label>Image</label> <br/>
-                <input type="file" name="image" accept="image/*" {...register("image",{required: true})} />
-                <br/>
-                {errors.image && <span>missing image</span>}
-                <br/> <br/>
-
-                <button>Add</button>
+                    <Fab size="small" color="primary" aria-label="add" type="submit" disabled={!isValid}>
+                        <SendIcon />
+                    </Fab>
                 
+
             </form>
 
         </div>
