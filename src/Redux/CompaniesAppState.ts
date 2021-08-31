@@ -52,10 +52,10 @@ export function companiesReducer(
       newState.companies.push(action.payload);
       break;
     case CompaniesActionType.CompanyUpdated:
-        newState.companies.filter(c => c.companyId === action.payload.id);
+        newState.companies.filter(c => c.id === action.payload.id);
       break;
     case CompaniesActionType.CompanyDeleted:
-       newState.companies = newState.companies.filter(c=>c.companyId !== action.payload);
+       newState.companies = newState.companies.filter(c=>c.id !== action.payload);
 
       break;
   }

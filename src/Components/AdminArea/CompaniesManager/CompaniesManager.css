@@ -6,3 +6,18 @@
 .Table{
     /* left:20px; */
 }
+
+.CompaniesManagerHead{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-content: center;
+    align-items: flex-start;
+}
+.CompaniesManagerHead>h3{
+ margin:0;
+}
+.CompaniesManagerHead>input{
+ margin:auto 20px;
+}

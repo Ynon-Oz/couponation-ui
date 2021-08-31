@@ -1,6 +1,6 @@
 class UserModel {
-    public userId?:number;
-    public userName?:string;
+    public id?:number;
+    public email?:string;
     public password?:string;
     public companyId?: string;   // Should be an Object
     public type?: string;    // Should be enum

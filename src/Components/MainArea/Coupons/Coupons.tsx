@@ -16,7 +16,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import "./Coupons.css";
 import { Avatar, Card, CardActions, CardContent, CardHeader, CardMedia, Collapse, Fab, IconButton, Typography } from "@material-ui/core";
-
+import couponsPics from '../../../Assets/CouponsImg/burger.jpg';
 interface CouponsState {
   coupons: CouponModel[];
   expanded: boolean;
@@ -54,7 +54,7 @@ class Coupons extends Component<{}, CouponsState> {
       <div className="Coupons">
         <h1>Coupons</h1>
 
-        {!this.state.coupons.length && <EmptyView msg="No Users for you" />}
+        {!this.state.coupons.length && <EmptyView msg="No Coupons for you" />}
         {this.state.coupons.length &&
           <div className="CouponsArea">
             {this.state.coupons.map((c) => (
@@ -75,7 +75,7 @@ class Coupons extends Component<{}, CouponsState> {
                 />
                 <CardMedia
                   className="CardMedia"
-                  image="/src/Assets/CouponsImg/burger.jpg"//{c.image}"
+                  image={couponsPics}//{c.image}"
                   title={c.image}
                 />
                 <CardContent>

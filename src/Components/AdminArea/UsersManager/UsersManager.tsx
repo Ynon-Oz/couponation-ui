@@ -74,8 +74,8 @@ class UsersManager extends Component<{}, UsersManagerState> {
                     </thead>
                     <tbody>
                         {this.state.users.map((u) => (
-                            <tr key={u.userId}>
-                                <td>{u.userName}</td>
+                            <tr key={u.id}>
+                                <td>{u.email}</td>
                                 <td>{u.type}</td>
                                 <td>{u.companyId}</td>
                                 <td>

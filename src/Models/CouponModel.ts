@@ -3,7 +3,7 @@ import CompanyModel from "./CompanyModel";
 class CouponModel {
     public id?: number;
     public companyId?: number;
-    public company?: CompanyModel;
+    public company?: number;
     public title?: string;
     public amount?: number;
     public price?: number;

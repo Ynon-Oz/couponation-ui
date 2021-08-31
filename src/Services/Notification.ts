@@ -14,6 +14,7 @@ export enum SccMsg{
     COMPANY_DELETED = 'Company deleted successfully',
     COMPANY_UPDATED = 'Company deleted successfully',
     PURCHASE_SUCCESS = 'Purchased successfully',
+    CUSTOMER_ADDED = 'Registered successfully, please log in',
     
 }
 export enum ErrMsg{

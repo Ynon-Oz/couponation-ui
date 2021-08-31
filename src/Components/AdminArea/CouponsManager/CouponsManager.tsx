@@ -60,6 +60,7 @@ class CouponsManager extends Component<{}, CouponsManagerState> {
                 {this.state.coupons.length && <table>
                     <thead>
                         <tr>
+                            <th>CompanyId</th>
                             <th>Title</th>
                             <th>Img</th>
                             <th>Description</th>
@@ -76,6 +77,7 @@ class CouponsManager extends Component<{}, CouponsManagerState> {
                     <tbody>
                         {this.state.coupons.map((c) => (
                             <tr key={c.id}>
+                                <td >{c.companyId}</td>
                                 <td >{c.title}</td>
                                 <td>{c.image}</td>
                                 <td>{c.description}</td>

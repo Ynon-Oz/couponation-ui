@@ -52,11 +52,11 @@ export function usersReducer(
       newState.users.push(action.payload);
       break;
     case UsersActionType.UserUpdated:
-        newState.users.filter(u => u.userId === action.payload.id);
+        newState.users.filter(u => u.id === action.payload.id);
     //   newState.users[idx] = action.payload;
       break;
     case UsersActionType.UserDeleted:
-       newState.users = newState.users.filter(u=>u.userId !== action.payload);
+       newState.users = newState.users.filter(u=>u.id !== action.payload);
 
       break;
   }

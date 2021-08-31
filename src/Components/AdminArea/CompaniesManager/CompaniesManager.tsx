@@ -1,6 +1,6 @@
 import { Fab, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from "@material-ui/core";
 import axios from "axios";
-import { Component } from "react";
+import { Component, SyntheticEvent } from "react";
 import { NavLink, useHistory } from "react-router-dom";
 import CompanyModel from "../../../Models/CompanyModel";
 import { companiesDeletedAction, companiesDownloadedAction } from "../../../Redux/CompaniesAppState";
@@ -20,6 +20,7 @@ import { Unsubscribe } from "redux";
 interface CompaniesManagerState {
     companies: CompanyModel[];
     columns: GridColDef[];
+    search:string;
 }
 
 class CompaniesManager extends Component<{}, CompaniesManagerState> {
@@ -29,6 +30,7 @@ class CompaniesManager extends Component<{}, CompaniesManagerState> {
         super(props);
         this.state = {
             companies: store.getState().companiesAppState.companies,
+            search:'',
             columns: [
                 //     { 
                 //         field: 'id', 
@@ -38,49 +40,39 @@ class CompaniesManager extends Component<{}, CompaniesManagerState> {
                 //  },
 
                 {
-                    field: 'companyId',
+                    field: 'id',
                     headerName: 'Id',
                     type: 'number',
                     // width: 150,
                     editable: true,
                 },
                 {
-                    field: 'companyName',
+                    field: 'name',
                     headerName: 'Name',
                     // width: 150,
                     editable: true,
                 },
                 {
-                    field: 'companyAddress',
+                    field: 'address',
                     headerName: 'Address',
                     // width: 110,
                     editable: true,
                 }, {
-                    field: 'companyPhoneNumber',
+                    field: 'phone',
                     headerName: 'Phone',
                     // width: 110,
                     editable: true,
                 }, {
-                    field: 'companyFaxNumber',
-                    headerName: 'Fax',
+                    field: 'email',
+                    headerName: 'Email',
                     // width: 110,
                     editable: true,
                 }, {
-                    field: 'companyWebSite',
-                    headerName: 'Web',
-                    // width: 110,
+                    field: 'website',
+                    headerName: 'Website',
                     editable: true,
                 },
-                // {
-                //     field: 'fullName',
-                //     headerName: 'Full name',
-                //     description: 'This column has a value getter and is not sortable.',
-                //     sortable: false,
-                //     width: 160,
-                //     valueGetter: (params: GridValueGetterParams) =>
-                //         `${params.getValue(params.id, 'firstName') || ''} ${params.getValue(params.id, 'lastName') || ''
-                //         }`,
-                // };
+                
             ],
         };
     }
@@ -92,7 +84,6 @@ class CompaniesManager extends Component<{}, CompaniesManagerState> {
                 const response = await axios.get<CompanyModel[]>(globals.urls.companies);
 
                 store.dispatch(companiesDownloadedAction(response.data)) // Global State;
-                //subscribe
                 store.subscribe(() => {
                     this.setState({ companies: store.getState().companiesAppState.companies }); // Will let us notify
                 })
@@ -116,7 +107,7 @@ class CompaniesManager extends Component<{}, CompaniesManagerState> {
             try {
                 console.log("Before axios: "+this.state.companies);
                 const response = await axios.delete<any>(globals.urls.companies + id);
-                const companiesFromSrv = this.state.companies.filter((c) => c.companyId !== id);
+                const companiesFromSrv = this.state.companies.filter((c) => c.id !== id);
                 console.log("After filter this.state: "+this.state.companies);
                 this.setState({ companies: companiesFromSrv});
                 console.log(this.state.companies);
@@ -128,32 +119,29 @@ class CompaniesManager extends Component<{}, CompaniesManagerState> {
         }
     }
 
+    private setValue= (args: SyntheticEvent)=>{
+        // args - info about the event
+        // args.target - the tag that raised the event
+        const value = (args.target as HTMLInputElement).value;
+        this.setState({search:value});
+        console.log(args);
+    }
+
     public render(): JSX.Element {
         return (
             <div className="CompaniesManager">
 
-                <div className="">
+                <div className="CompaniesManagerHead">
                     <NavLink to="/admin" className="BackButton">
                         <Fab size="small" color="primary" aria-label="add">
                             <ArrowBackIosIcon />
                         </Fab></NavLink>
-                    <input type="text" placeholder="Search..."></input>
-
+                        <h3>Companies Manager</h3>
+                    <input type="text" placeholder="Search..." onChange={this.setValue} value={this.state.search}></input>
+                    {/* <br /><p>{this.state.search}</p> */}
                 </div>
                 <hr />
-                {/* <div >
-                    <DataGrid
-                        rows={this.state.companies.map((c)=>(
-                           <span key={c.companyId}></span>
-                        ))}
-                        columns={this.state.columns}
-                        pageSize={5}
-                        checkboxSelection
-                        disableSelectionOnClick
-                    />
-                </div> */}
-
-                <hr />
+                
 
 
                 <TableContainer component={Paper}>
@@ -173,21 +161,21 @@ class CompaniesManager extends Component<{}, CompaniesManagerState> {
                         </TableHead>
                         <TableBody>
                             {this.state.companies.map((c) => (
-                                <TableRow key={c.companyId}>
-                                    <TableCell align="left">{c.companyId}</TableCell>
+                                <TableRow key={c.id}>
+                                    <TableCell align="left">{c.id}</TableCell>
                                     <TableCell component="th" scope="row">
-                                        {c.companyName}
+                                        {c.name}
                                     </TableCell>
-                                    <TableCell align="left">{c.companyAddress}</TableCell>
-                                    <TableCell align="left">{c.companyPhoneNumber}</TableCell>
-                                    <TableCell align="left">{c.companyFaxNumber}</TableCell>
-                                    <TableCell align="left">{c.companyWebSite}</TableCell>
+                                    <TableCell align="left">{c.address}</TableCell>
+                                    <TableCell align="left">{c.phone}</TableCell>
+                                    <TableCell align="left">{c.email}</TableCell>
+                                    <TableCell align="left">{c.website}</TableCell>
                                     <TableCell align="center">
-                                        <NavLink to="/"> <Fab size="small" color="default" aria-label="add" >
+                                        <NavLink to="/admin/companies/update"> <Fab size="small" color="default" aria-label="add" >
                                             <EditOutlinedIcon />
                                         </Fab></NavLink>
                                         <NavLink to="/admin/companies"> <Fab size="small" color="secondary" aria-label="add"
-                                            onClick={() => this.deleteCompany(c.companyId)}>
+                                            onClick={() => this.deleteCompany(c.id)}>
                                             <DeleteOutlineOutlinedIcon />
                                         </Fab></NavLink>
                                     </TableCell>

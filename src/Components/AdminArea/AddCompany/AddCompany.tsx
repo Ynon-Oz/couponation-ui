@@ -50,7 +50,7 @@ function AddCompany(): JSX.Element {
             <form onSubmit={handleSubmit(send)}>
 
 
-                <TextField id="standard-basic" label="Company Name" {...register("companyName", {
+                <TextField id="standard-basic" label="Company Name" {...register("name", {
                     required: {
                         value: true,
                         message: 'Missing name'
@@ -61,11 +61,11 @@ function AddCompany(): JSX.Element {
                 })} />
 
                 <br />
-                <span className="ErrSpan">{errors.companyName?.message}</span>
+                <span className="ErrSpan">{errors.name?.message}</span>
 
                 <br />
 
-                <TextField id="standard-basic" label="Address" {...register("companyAddress", {
+                <TextField id="standard-basic" label="Address" {...register("address", {
                     required: {
                         value: true,
                         message: 'Missing address'
@@ -73,33 +73,26 @@ function AddCompany(): JSX.Element {
                 })} />
 
                 <br />
-                <span className="ErrSpan">{errors.companyAddress?.message}</span>
+                <span className="ErrSpan">{errors.address?.message}</span>
                 <br />
 
                 <TextField id="standard-basic" label="Phone Number"
-                    {...register("companyPhoneNumber", { required: true })} />
+                    {...register("phone", { required: true })} />
                 <br />
-                {errors.companyPhoneNumber && <span className="ErrSpan">Missing phone number</span>}
+                {errors.phone && <span className="ErrSpan">Missing phone number</span>}
                 <br />
 
-                <TextField id="standard-basic" label="Fax Number"
-                    {...register("companyFaxNumber", { required: true })} />
+                <TextField id="standard-basic" label="Email"
+                    {...register("email", { required: true })} />
 
                 <br />
-                {errors.companyFaxNumber && <span className="ErrSpan">Missing fax number</span>}
+                {errors.email && <span className="ErrSpan">Missing fax number</span>}
                 <br />
-                <TextField id="standard-basic" label="Web-Site" {...register("companyWebSite", { required: true })} />
+                <TextField id="standard-basic" label="Web-Site" {...register("website", { required: true })} />
                 <br />
-                {errors.companyWebSite && <span className="ErrSpan">Missing WebSite</span>}
+                {errors.website && <span className="ErrSpan">Missing WebSite</span>}
                 <br /> <br />
-                {/* <Button
-        variant="contained"
-        color="primary"
-        type ="submit"
-        endIcon={<Icon>send</Icon>}
-      >
-        Send
-      </Button> */}
+               
                 <NavLink to="/admin/companies" className="BackButton">
                     <Fab size="small" color="primary" aria-label="back">
                         <CloseIcon />

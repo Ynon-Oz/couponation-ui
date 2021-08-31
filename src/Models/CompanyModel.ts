@@ -1,11 +1,11 @@
 class CompanyModel {
     // public id?: number;
-    public companyId?: number;
-    public companyName?: string;
-    public companyAddress?: string;
-    public companyPhoneNumber?: string;
-    public companyFaxNumber?: string;
-    public companyWebSite?: string;
+    public id?: number;
+    public name?: string;
+    public address?: string;
+    public phone?: string;
+    public email?: string;
+    public website?: string;
    
 }
 
