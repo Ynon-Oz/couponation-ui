@@ -3,9 +3,17 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-content: center;
+    justify-items: center;
+    align-items: center;
 }
 
 .Header > h1{
     font-family: 'Cinzel Decorative', cursive;
     text-shadow: 4px 4px 4px #aaa
+}
+
+.Header > .ButtonGroup{
+    position: fixed;
+    right: 70px;
 }

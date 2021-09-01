@@ -1,3 +1,19 @@
 .Register {
-	
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+.Register > form {
+	background-color:whitesmoke;
+    width:350px;
+    padding: 20px;
+    margin: 10px;
+    border-radius: 10px;
+}
+
+.ErrSpan{
+    color:tomato;
 }

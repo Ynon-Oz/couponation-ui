@@ -171,7 +171,7 @@ class CompaniesManager extends Component<{}, CompaniesManagerState> {
                                     <TableCell align="left">{c.email}</TableCell>
                                     <TableCell align="left">{c.website}</TableCell>
                                     <TableCell align="center">
-                                        <NavLink to="/admin/companies/update"> <Fab size="small" color="default" aria-label="add" >
+                                        <NavLink to={this.idToStringFormatter(c.id)}> <Fab size="small" color="default" aria-label="add" >
                                             <EditOutlinedIcon />
                                         </Fab></NavLink>
                                         <NavLink to="/admin/companies"> <Fab size="small" color="secondary" aria-label="add"
@@ -188,7 +188,11 @@ class CompaniesManager extends Component<{}, CompaniesManagerState> {
 
         );
     }
-
+    private idToStringFormatter(id: number ){
+        const str = "/admin/companies/"+id.toString()+"/update";
+        console.log(str)
+        return str;
+    }
     public componentWillUnmount(): void{
         // this.unsubscribe();
     }

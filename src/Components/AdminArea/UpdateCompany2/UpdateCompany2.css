@@ -1,0 +1,20 @@
+.UpdateCompany{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+.UpdateCompany > form {
+        background-color:whitesmoke;
+        width:350px;
+        padding: 20px;
+        margin: 10px;
+        border-radius: 10px;
+    
+}
+.ErrSpan{
+    color:tomato;
+}

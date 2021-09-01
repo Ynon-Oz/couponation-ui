@@ -11,17 +11,10 @@ import CloseIcon from '@material-ui/icons/Close';
 import { Visibility, VisibilityOff } from "@material-ui/icons";
 import React from "react";
 
-// interface State {
-//     pas$word: string;
-//     showPassword: boolean;
-// }
 
 
 function Register(): JSX.Element {
-    // const [values, setValues] = React.useState<State>({
-    //     pas$word: '',
-    //     showPassword: false,
-    // });
+    
 
     const { register, handleSubmit, formState: { errors, isValid } } = useForm<RegistrationModel>({
         mode: "onTouched",
@@ -32,41 +25,24 @@ function Register(): JSX.Element {
     async function send(registerInfo: RegistrationModel) {
         console.log(registerInfo);
         try {
-            // const formData = new FormData();
-            // formData.append("email", registerInfo.email);
-            // formData.append("password", registerInfo.password);
-            // formData.append("firstName", registerInfo.firstName);
-            // formData.append("lastName", registerInfo.lastName);
-            // formData.append("phone", registerInfo.phone);
-            // formData.append("address", registerInfo.address);
+            
             const response = await axios.post<RegistrationModel>(globals.urls.register, registerInfo);
             notify.success(SccMsg.CUSTOMER_ADDED)
 
-            history.push('/coupons')
+            history.push('/login')
             console.log(response.data);
         }
         catch (err) {
-            // console.log(err.message);
             notify.error(err);
 
         }
     }
-    // const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
-    //     setValues({ ...values, [prop]: event.target.value });
-    // };
 
-    // const handleClickShowPassword = () => {
-    //     setValues({ ...values, showPassword: !values.showPassword });
-    // };
-
-    // const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
-    //     event.preventDefault();
-    // };
 
     return (
         <div className="Register">
-            <h2>Sign Up</h2>
             <form onSubmit={handleSubmit(send)}>
+            <h2>Sign Up</h2>
 
                 <TextField id="standard-basic" label="First Name"
                     {...register("firstName", {
@@ -115,7 +91,7 @@ function Register(): JSX.Element {
                 <br />
                 <span className="ErrSpan">{errors.address?.message}</span>
                 <br />
-                <TextField id="standard-basic" label="Password" {...register("password", {
+                <TextField type="password" id="standard-basic" label="Password" {...register("password", {
                     required: {
                         value: true,
                         message: 'Missing password'
@@ -124,6 +100,7 @@ function Register(): JSX.Element {
 
                 <br />
                 <span className="ErrSpan">{errors.password?.message}</span>
+                <br />
                 <br />
                 {/* <FormControl className="" >
                     <InputLabel htmlFor="standard-adornment-password" >Password</InputLabel>
@@ -155,7 +132,7 @@ function Register(): JSX.Element {
 
 
 
-                <br /> <br />
+               
 
                 <NavLink to="/" className="BackButton">
                     <Fab size="small" color="primary" aria-label="back">
