@@ -8,7 +8,7 @@ class DevelopmentGlobals extends Globals {
     customers: "http://localhost:8080/customer/",
     purchases: "http://localhost:8080/purchase/",
     register: "http://localhost:8080/register/",
-    login: "http://localhost:8080/login/",
+    login: "http://localhost:8080/user/login/",
   };
 }
 
@@ -20,7 +20,7 @@ class ProductionGlobals extends Globals {
     customers: "http://localhost:8080/customer/",
     purchases: "http://localhost:8080/purchase/",
     register: "http://localhost:8080/register/",
-    login: "http://localhost:8080/login/",
+    login: "http://localhost:8080/user/login/",
 
   };
 }

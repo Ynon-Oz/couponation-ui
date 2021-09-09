@@ -8,6 +8,9 @@ import globals from '../../../Services/Globals';
 import notify, { SccMsg } from '../../../Services/Notification';
 import SendIcon from '@material-ui/icons/Send';
 import "./Login.css";
+import store from '../../../Redux/Store';
+import { userLogin } from '../../../Redux/LoginAppState';
+import SuccessfulLoginModel from '../../../Models/SuccessfulLoginModel';
 
 function Login(): JSX.Element {
     
@@ -25,6 +28,8 @@ function Login(): JSX.Element {
 
             history.push('/')
             console.log(response.data);
+            const successLogin = response.data as SuccessfulLoginModel; 
+            store.dispatch(userLogin(successLogin));
         }
         catch (err) {
             notify.error(err);
@@ -35,6 +40,8 @@ function Login(): JSX.Element {
     
     return (
         <div className="Login">
+                        <form onSubmit={handleSubmit(send)}>
+
 			<LockIcon/>
             <h4>Sign in</h4>
             <TextField id="standard-basic" label="Email"
@@ -56,6 +63,7 @@ function Login(): JSX.Element {
             <Button startIcon={<SendIcon />} size="small" variant="contained" color="primary" aria-label="add" type="submit" disabled={!isValid}>
                     Sign in
                 </Button>
+                </form>
         </div>
     );
 }
