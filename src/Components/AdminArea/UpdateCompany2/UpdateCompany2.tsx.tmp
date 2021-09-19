@@ -2,34 +2,39 @@ import { Fab, TextField } from "@material-ui/core";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { NavLink, RouteComponentProps, useHistory } from "react-router-dom";
-
-import SendIcon from '@material-ui/icons/Send';
-import CloseIcon from '@material-ui/icons/Close';
-// import "./UpdateCompany2.css";
-import { companiesUpdatedAction } from "../../../Redux/CompaniesAppState";
-import { useEffect, useState } from "react";
 import CompanyModel from "../../../Models/CompanyModel";
+import store from "../../../Redux/Store";
 import globals from "../../../Services/Globals";
 import notify, { SccMsg } from "../../../Services/Notification";
-import store from "../../../Redux/Store";
+import SendIcon from '@material-ui/icons/Send';
+import CloseIcon from '@material-ui/icons/Close';
+import "./UpdateCompany2.css";
+import { companiesUpdatedAction } from "../../../Redux/CompaniesAppState";
+import { useEffect } from "react";
+
+interface UpdateCompanyProps extends RouteComponentProps<RouteParam> {
+}
+
+interface UpdateCompanyState{
+    company: CompanyModel;
+}
 
 interface RouteParam{
     id: string;
 }
-interface UpdateCompanyProps extends RouteComponentProps<RouteParam> {
-}
 
 
 
 
 
+function UpdateCompany(Props: CompanyModel): JSX.Element {
 
-function UpdateCompany(Props: UpdateCompanyProps): JSX.Element {
-    const [comp, setComp] = useState(null);
     const { register, handleSubmit, formState: { errors, isValid } } = useForm<CompanyModel>({
         mode: "onTouched",
 
     });
+    const history = useHistory();
+
 
     useEffect(() => {
         //didMount
@@ -38,7 +43,6 @@ function UpdateCompany(Props: UpdateCompanyProps): JSX.Element {
         };
       });
 
-    const history = useHistory();
 
     async function send(company: CompanyModel) {
         console.log(company);

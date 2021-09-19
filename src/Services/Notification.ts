@@ -12,7 +12,7 @@ export enum SccMsg{
     COMPANY_ADDED = 'Company added successfully',
     COMPANIES_DOWNLOADED = 'All companies are here!',
     COMPANY_DELETED = 'Company deleted successfully',
-    COMPANY_UPDATED = 'Company deleted successfully',
+    COMPANY_UPDATED = 'Company updated successfully',
     PURCHASE_SUCCESS = 'Purchased successfully',
     CUSTOMER_ADDED = 'Registered successfully, please log in',
     

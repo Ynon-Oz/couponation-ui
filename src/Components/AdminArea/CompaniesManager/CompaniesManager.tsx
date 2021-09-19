@@ -76,23 +76,27 @@ class CompaniesManager extends Component<{}, CompaniesManagerState> {
             ],
         };
     }
+    public async fetchData(){
+        try{
 
-    public async componentDidMount() {
+            const response = await axios.get<CompanyModel[]>(globals.urls.companies);
+            store.dispatch(companiesDownloadedAction(response.data)) // Global State;
+            this.setState({ companies: response.data }); //Local State
+            notify.success(SccMsg.COMPANIES_DOWNLOADED)
+        } catch (err) {
+            notify.error(err);
+            console.log(err);
+        }
+
+    }
+    public  componentDidMount()  {
 
         if (this.state.companies.length == 0) {
-            try {
-                const response = await axios.get<CompanyModel[]>(globals.urls.companies);
-
-                store.dispatch(companiesDownloadedAction(response.data)) // Global State;
+                this.fetchData();
                 store.subscribe(() => {
                     this.setState({ companies: store.getState().companiesAppState.companies }); // Will let us notify
                 })
-                this.setState({ companies: response.data }); //Local State
-                notify.success(SccMsg.COMPANIES_DOWNLOADED)
-            } catch (err) {
-                notify.error(err);
-                console.log(err);
-            }
+           
         }
 
     }
@@ -114,7 +118,7 @@ class CompaniesManager extends Component<{}, CompaniesManagerState> {
                 store.dispatch(companiesDeletedAction(id));
                 notify.success(SccMsg.COMPANY_DELETED);
             } catch (err) {
-                notify.error(err.message);
+                // notify.error(err.message);
             }
         }
     }
@@ -194,7 +198,7 @@ class CompaniesManager extends Component<{}, CompaniesManagerState> {
         return str;
     }
     public componentWillUnmount(): void{
-        // this.unsubscribe();
+        this.unsubscribe();
     }
 }
 
