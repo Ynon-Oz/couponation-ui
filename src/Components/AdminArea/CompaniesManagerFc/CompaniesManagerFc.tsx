@@ -15,24 +15,24 @@ import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined'
 
 import "./CompaniesManagerFc.css";
 
-interface CompanyManagerState {
-    companies: CompanyModel[];
+// interface CompanyManagerState {
+//     companies: CompanyModel[];
 
-}
+// }
 
 
 
 function CompaniesManagerFc(): JSX.Element {
 
-    const [state, setState] = useState(null);
-    // const unsubscribe: Unsubscribe ;
+    const [state, setState] = useState(store.getState().companiesAppState.companies);
+    const unsubscribe = store.subscribe(()=>{store.getState()}) ;
 
     async function fetchData() {
         try {
 
             const response = await axios.get<CompanyModel[]>(globals.urls.companies);
             store.dispatch(companiesDownloadedAction(response.data)) // Global State;
-            setState({ companies: response.data }); //Local State
+            setState(response.data); //Local State
             console.log(response.data);
             notify.success(SccMsg.COMPANIES_DOWNLOADED)
         } catch (err) {
@@ -42,7 +42,7 @@ function CompaniesManagerFc(): JSX.Element {
 
     }
 
-     async function deleteCompany(id: any) {
+    async function deleteCompany(id: any) {
 
         const res = window.confirm(
             "Are you sure you want to delete this company : " + id + "?"
@@ -50,12 +50,12 @@ function CompaniesManagerFc(): JSX.Element {
         if (res) {
             id = +id;
             try {
-                console.log("Before axios: "+state.companies);
+                console.log("Before axios: " + state);
                 const response = await axios.delete<any>(globals.urls.companies + id);
-                const companiesFromSrv = state.companies.filter((c) => c.id !== id);
-                console.log("After filter this.state: "+ state.companies);
-                setState({ companies: companiesFromSrv});
-                console.log(state.companies);
+                const companiesFromSrv = state.filter((c) => c.id !== id);
+                console.log("After filter - state: " + state);
+                setState(  companiesFromSrv );
+                console.log(state);
                 store.dispatch(companiesDeletedAction(id));
                 notify.success(SccMsg.COMPANY_DELETED);
             } catch (err) {
@@ -66,16 +66,16 @@ function CompaniesManagerFc(): JSX.Element {
 
     useEffect(() => {
         //didMount
-        if (state.companies.length == 0) {
+        if (state.length == 0) {
             fetchData();
             store.subscribe(() => {
-                setState({ companies: store.getState().companiesAppState.companies }); // Will let us notify
+                setState( store.getState().companiesAppState.companies); // Will let us notify
             })
 
         }
         return () => {
             //unMount
-            // unsubscribe();
+            unsubscribe();
         };
     });
 
@@ -109,7 +109,7 @@ function CompaniesManagerFc(): JSX.Element {
                             <TableCell>Name</TableCell>
                             <TableCell align="center">Address</TableCell>
                             <TableCell align="center">Phone</TableCell>
-                            <TableCell align="center">Fax</TableCell>
+                            <TableCell align="center">Email</TableCell>
                             <TableCell align="center">Web</TableCell>
                             <TableCell align="center">Actions <NavLink to="/admin/companies/add"> <Fab size="small" color="primary" aria-label="add" >
                                 <AddIcon />
@@ -117,7 +117,7 @@ function CompaniesManagerFc(): JSX.Element {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {state.companies.map((c: CompanyModel) => (
+                        {state.map((c: CompanyModel) => (
                             <TableRow key={c.id}>
                                 <TableCell align="left">{c.id}</TableCell>
                                 <TableCell component="th" scope="row">

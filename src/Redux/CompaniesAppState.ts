@@ -25,12 +25,12 @@ export function companiesDownloadedAction(companies: CompanyModel[]): CompaniesA
   return { type: CompaniesActionType.CompaniesDownloaded, payload: companies };
 }
 
-export function companiesAddedAction(companies: CompanyModel): CompaniesAction {
-  return { type: CompaniesActionType.CompanyAdded, payload: companies };
+export function companiesAddedAction(company: CompanyModel): CompaniesAction {
+  return { type: CompaniesActionType.CompanyAdded, payload: company };
 }
 
-export function companiesUpdatedAction(companies: CompanyModel): CompaniesAction {
-  return { type: CompaniesActionType.CompanyUpdated, payload: companies };
+export function companiesUpdatedAction(company: CompanyModel): CompaniesAction {
+  return { type: CompaniesActionType.CompanyUpdated, payload: company };
 }
 
 export function companiesDeletedAction(id: number): CompaniesAction {

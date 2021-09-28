@@ -15,6 +15,7 @@ import UpdateCompany2 from "../../AdminArea/UpdateCompany2/UpdateCompany2";
 import Login from "../../UsersArea/Login/Login";
 import Register from "../../UsersArea/Register/Register";
 import "./Routing.css";
+import CompaniesManagerFc from "../../AdminArea/CompaniesManagerFc/CompaniesManagerFc";
 
 function Routing(): JSX.Element {
     return (
@@ -25,7 +26,7 @@ function Routing(): JSX.Element {
                 <Route path="/about" component={About} exact />
                 <Route path="/contact-us" component={Contact} exact />
                 <Route path="/admin" component={AdminDashboard} exact />
-                <Route path="/admin/companies" component={CompaniesManager} exact />
+                <Route path="/admin/companies" component={CompaniesManagerFc} exact />
                 <Route path="/admin/companies/add" component={AddCompany} exact />
                 <Route path="/admin/companies/:id/update" component={UpdateCompany2} exact />
                 <Route path="/admin/coupons" component={CouponsManager} exact />

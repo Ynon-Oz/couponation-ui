@@ -1,9 +1,31 @@
+import { useEffect, useState } from "react";
+import store from "../../../Redux/Store";
 import "./Bless.css";
 
 function Bless(): JSX.Element {
+  const [user, setUser] = useState("Visitor");
+  const unsubscribe = store.subscribe(() =>
+    console.log('State after dispatch: ', store.getState())
+  )
+
+  useEffect(() => {
+    //didMount
+    // if (store.getState().loginAppState.loggedIn != null) {
+    //     store.subscribe(() => {
+    //         setUser( store.getState().loginAppState.loggedIn.name); // Will let us notify
+    //     })
+
+    // }
+    store.subscribe(() => { setUser(store.getState().loginAppState.loggedIn != null ? store.getState().loginAppState.loggedIn.name : "Visitor") })
+    return () => {
+      //unMount
+      unsubscribe();
+    };
+  });
+
   return (
     <div className="Bless">
-      {isMorning() ? 'Good morning' : isAfterNoon() ? 'Good Afternoon' : isEvening() ? 'Good Evening' : 'Good Night'} Visitor
+      {isMorning() ? 'Good morning' : isAfterNoon() ? 'Good Afternoon' : isEvening() ? 'Good Evening' : 'Good Night'} {user}
 
     </div>
   );
