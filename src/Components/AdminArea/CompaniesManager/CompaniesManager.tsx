@@ -118,7 +118,7 @@ class CompaniesManager extends Component<{}, CompaniesManagerState> {
                 store.dispatch(companiesDeletedAction(id));
                 notify.success(SccMsg.COMPANY_DELETED);
             } catch (err) {
-                // notify.error(err.message);
+                notify.error(err);
             }
         }
     }
