@@ -1,6 +1,6 @@
 class SuccessfulLoginModel {
   public name?: string;
-  public type?: string;
+  public userType?: string;
   public userId?: number;
   public token?: string;
 }

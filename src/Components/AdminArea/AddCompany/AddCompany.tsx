@@ -39,7 +39,7 @@ function AddCompany(): JSX.Element {
             history.push('/admin/companies')
         }
         catch (err) {
-            notify.error(err);
+            notify.error("Adding Company failed: "+err);
         }
     }
 

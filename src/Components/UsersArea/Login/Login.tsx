@@ -21,15 +21,21 @@ function Login(): JSX.Element {
     const history = useHistory();
 
     async function send(loginDetails: LoginDetailsModel) {
-        console.log(loginDetails);
         try {
             
             const response = await axios.post<LoginDetailsModel>(globals.urls.login, loginDetails);
 
-            history.push('/')
-            console.log(response.data);
             const successLogin = response.data as SuccessfulLoginModel; 
             store.dispatch(userLogin(successLogin));
+            if (successLogin.userType=="CUSTOMER"){
+                history.push('/coupons')
+            }
+            if (successLogin.userType=="ADMIN"){
+                history.push('/admin')
+            }
+            if (successLogin.userType=="COMPANY"){
+                history.push('/company')
+            }
         }
         catch (err) {
             notify.error(err);

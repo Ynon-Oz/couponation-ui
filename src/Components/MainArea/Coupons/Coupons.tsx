@@ -17,6 +17,7 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import "./Coupons.css";
 import { Avatar, Card, CardActions, CardContent, CardHeader, CardMedia, Collapse, Fab, IconButton, Typography } from "@material-ui/core";
 import couponsPics from '../../../Assets/CouponsImg/burger.jpg';
+import PurchaseModel from "../../../Models/PurchaseModel";
 interface CouponsState {
   coupons: CouponModel[];
   expanded: boolean;
@@ -31,6 +32,35 @@ class Coupons extends Component<{}, CouponsState> {
     };
   }
 
+  public async buyNow(c: CouponModel) {
+    if (store.getState().loginAppState.loggedIn!= null && store.getState().loginAppState.loggedIn.userType=="CUSTOMER"){
+
+      console.log(c.title + " purchased");
+      let purchase: PurchaseModel = {
+        costumerId: store.getState().loginAppState.loggedIn.userId,
+        couponId: c.id,
+        amount: 1,
+      };
+      try {
+        
+        // purchase.costumerId == store.getState().loginAppState.loggedIn.userId;
+        // purchase.couponId==c.id;
+        // purchase.amount==1;
+        const response = await axios.post<PurchaseModel[]>(globals.urls.purchases, purchase);
+  
+  
+      } catch (error) {
+        notify.error(error);
+        console.log(error);
+      }finally{
+        console.log(purchase);
+      }
+    }else{
+      notify.error("Only logged in customers can purchase items");
+
+    }
+  }
+
   public async componentDidMount() {
 
     if (this.state.coupons.length == 0) {
@@ -40,7 +70,7 @@ class Coupons extends Component<{}, CouponsState> {
         store.dispatch(couponsDownloadedAction(response.data)) // Global State;
 
         this.setState({ coupons: response.data }); //Local State
-        notify.success(SccMsg.COUPONS_DOWNLOADED)
+        // notify.success(SccMsg.COUPONS_DOWNLOADED)
       } catch (err) {
         notify.error(err);
         console.log(err);
@@ -87,19 +117,19 @@ class Coupons extends Component<{}, CouponsState> {
                   </Typography>
                 </CardContent>
                 <CardActions disableSpacing>
-                  <IconButton aria-label="Buy Now" color="primary">
+                  <IconButton aria-label="Buy Now" color="primary" onClick={() => this.buyNow(c)}>
                     <ShoppingCartIcon />
                   </IconButton>
                   <IconButton aria-label="share">
                     <ShareIcon />
                   </IconButton>
                   <IconButton
-                  // className={clsx(classes.expand, {
-                  //   [classes.expandOpen]: expanded,
-                  // })}
-                  // onClick={handleExpandClick}
-                  aria-expanded={this.state.expanded}
-                  aria-label="show more"
+                    // className={clsx(classes.expand, {
+                    //   [classes.expandOpen]: expanded,
+                    // })}
+                    // onClick={handleExpandClick}
+                    aria-expanded={this.state.expanded}
+                    aria-label="show more"
                   >
                     <ExpandMoreIcon />
                   </IconButton>
@@ -135,9 +165,9 @@ class Coupons extends Component<{}, CouponsState> {
   }
 }
 
-// public handleExpandClick()  {
-//   this.setState({ coupons: response.data })
-// }; //Local State
+
 
 
 export default Coupons;
+
+

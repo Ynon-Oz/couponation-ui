@@ -5,17 +5,11 @@ import "./Bless.css";
 function Bless(): JSX.Element {
   const [user, setUser] = useState("Visitor");
   const unsubscribe = store.subscribe(() =>
-    console.log('State after dispatch: ', store.getState())
+    console.log()
   )
 
   useEffect(() => {
     //didMount
-    // if (store.getState().loginAppState.loggedIn != null) {
-    //     store.subscribe(() => {
-    //         setUser( store.getState().loginAppState.loggedIn.name); // Will let us notify
-    //     })
-
-    // }
     store.subscribe(() => { setUser(store.getState().loginAppState.loggedIn != null ? store.getState().loginAppState.loggedIn.name : "Visitor") })
     return () => {
       //unMount

@@ -1,6 +1,6 @@
 import { Button, ButtonGroup } from "@material-ui/core";
 import { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import SuccessfulLoginModel from "../../../Models/SuccessfulLoginModel";
 import { userLogout } from "../../../Redux/LoginAppState";
 import store from "../../../Redux/Store";
@@ -13,49 +13,36 @@ import "./Header.css";
 function Header(): JSX.Element {
 
     const [loggedIn, setLoggedIn] = useState(false);
-    const unsubscribe = store.subscribe(() => console.log('State after dispatch: ', store.getState()));
+    const unsubscribe = store.subscribe(() => console.log());
+    const history = useHistory();
 
-    let [user, setUser] = useState(store.getState().loginAppState.loggedIn);
 
-    const buttons = user == null ? <ButtonGroup className="ButtonGroup" size="small" aria-label="small outlined primary  button group">
+    const buttons = !loggedIn ? <ButtonGroup className="ButtonGroup" size="small" aria-label="small outlined primary  button group">
         <NavLink to="/login"><Button>Login</Button></NavLink>
-        <NavLink to="/users/register"><Button>Register</Button></NavLink><Button onClick={() => logout()} >Logout</Button>
+        <NavLink to="/users/register"><Button>Register</Button></NavLink>
     </ButtonGroup>
-        : <Button>Log Out</Button>;
-    // useEffect(() => {
-    //     //didMount
-    //     if (store.getState().loginAppState.loggedIn.name){
-    //         store.subscribe(() => {
-    //             setLoggedIn(true); 
-    //         })}    return () => {
-    //             //unMount
-    //         };
-    // });
+        : <Button onClick={() => logout()} >Log Out</Button>;
+
 
     useEffect(() => {
         //didMount
-        // if (store.getState().loginAppState.loggedIn !== null) {
-        //     store.subscribe(() => {
-        //         setLoggedIn( store.getState().loginAppState.loggedIn!==null); 
-        //     })
-        //    user = store.subscribe(() => {  store.getState().loginAppState.loggedIn})
-        // }
-
+        store.subscribe(() => { setLoggedIn(store.getState().loginAppState.loggedIn != null ? true : false) })
         return () => {
-            //unMount
-            // unsubscribe();
+          //unMount
+          unsubscribe();
         };
-    });
+      });
 
     function logout() {
+        console.log(store.getState().loginAppState.loggedIn.userType);
         store.dispatch(userLogout());
-        // user===null;
+        history.push('/login')
     }
 
     return (
         <div className="Header">
             <h1>Couponation</h1>
-            <div>
+            <div className="LoginButtons">
                 {buttons}
 
             </div>

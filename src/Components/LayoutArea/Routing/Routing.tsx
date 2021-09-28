@@ -4,7 +4,6 @@ import AdminDashboard from "../../AdminArea/AdminDashboard/AdminDashboard";
 import CompaniesManager from "../../AdminArea/CompaniesManager/CompaniesManager";
 import CouponsManager from "../../AdminArea/CouponsManager/CouponsManager";
 import PurchasesManager from "../../AdminArea/PurchasesManager/PurchasesManager";
-import UsersManager from "../../AdminArea/UsersManager/UsersManager";
 import About from "../../MainArea/About/About";
 import Contact from "../../MainArea/Contact/Contact";
 import Coupons from "../../MainArea/Coupons/Coupons";
@@ -16,6 +15,7 @@ import Login from "../../UsersArea/Login/Login";
 import Register from "../../UsersArea/Register/Register";
 import "./Routing.css";
 import CompaniesManagerFc from "../../AdminArea/CompaniesManagerFc/CompaniesManagerFc";
+import UsersManagerFc from "../../AdminArea/UsersManagerFc/UsersManagerFc";
 
 function Routing(): JSX.Element {
     return (
@@ -31,7 +31,7 @@ function Routing(): JSX.Element {
                 <Route path="/admin/companies/:id/update" component={UpdateCompany2} exact />
                 <Route path="/admin/coupons" component={CouponsManager} exact />
                 <Route path="/admin/purchases" component={PurchasesManager} exact />
-                <Route path="/admin/users" component={UsersManager} exact />
+                <Route path="/admin/users" component={UsersManagerFc} exact />
                 <Route path="/users/register" component={Register} exact />
                 <Route path="/login" component={Login} exact />
                 <Redirect from="/" to="/home" exact/>

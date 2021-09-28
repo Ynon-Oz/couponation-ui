@@ -1,3 +1,4 @@
+.SideNav >nav>div>.nav-link,
 .SideNav >nav>.nav-link {
 	text-decoration: none;
     display: inline-block;
@@ -10,6 +11,7 @@
     padding:10px;
     
 }
+.SideNav >nav>div>.nav-link:hover,
 .SideNav>nav>.nav-link:hover {
 	/* background-color:red; */
     opacity: 0.9;

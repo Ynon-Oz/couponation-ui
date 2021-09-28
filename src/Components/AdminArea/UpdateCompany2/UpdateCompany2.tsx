@@ -31,26 +31,18 @@ function UpdateCompany(props: UpdateCompanyProps): JSX.Element {
 
     });
 
-    useEffect(() => {
-        //didMount
-        return () => {
-            //unMount
-        };
-    });
+ 
 
     const history = useHistory();
 
     async function send(company: CompanyModel) {
-        console.log(company);
-        console.log(comp);
+        
         try {
 
             const response = await axios.put<CompanyModel>(globals.urls.companies + comp.id, company);
             store.dispatch(companiesUpdatedAction(response.data));
 
-            console.log("response: ");
-            console.log(response.data);
-            console.log("response end");
+
 
 
             notify.success(SccMsg.COMPANY_UPDATED)

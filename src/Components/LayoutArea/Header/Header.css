@@ -13,7 +13,7 @@
     text-shadow: 4px 4px 4px #aaa
 }
 
-.Header > .ButtonGroup{
+.Header > .LoginButtons{
     position: fixed;
     right: 70px;
 }
